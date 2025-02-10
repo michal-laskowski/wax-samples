@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "wax-jsx",
+        "moduleResolution": "Bundler",
+        "target": "ES2018",
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "baseUrl": ".",
+        "types": [
+            "wax-jsx"
+        ],
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "*"
+    ]
+}

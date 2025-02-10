@@ -1,0 +1,5 @@
+{
+    "devDependencies": {
+        "wax-jsx": "github:michal-laskowski/wax-jsx"
+    }
+}
