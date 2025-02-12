@@ -14,6 +14,7 @@ import (
 
 	"github.com/michal-laskowski/wax"
 	wax_echo "github.com/michal-laskowski/wax-libs/echo"
+	"github.com/michal-laskowski/wax-libs/gots"
 	"github.com/michal-laskowski/wax-libs/livereload"
 )
 
@@ -36,6 +37,16 @@ func main() {
 
 	if *isDevRun {
 		fmt.Printf("In DEV run")
+
+		out, err := os.Create("./views/model.generated.d.ts")
+		if err != nil {
+			panic(err)
+		}
+		defer out.Close()
+
+		// Generate type definition for views
+		gots.GenerateTypeDefinition(out, "", "", internal.PageModel{}, appViewUtils)
+
 		// when you  - we will use FS view resolver
 		e.Renderer = wax_echo.NewWaxEchoRenderer(wax.NewFsViewResolver(os.DirFS("./views/")), wax.WithGlobalObject("viewUtils", appViewUtils))
 
@@ -45,9 +56,6 @@ func main() {
 		fmt.Printf("WAX will use embedded views")
 		e.Renderer = wax_echo.NewWaxEchoRenderer(wax.NewFsViewResolver(views.EmbeddedViews), wax.WithGlobalObject("viewUtils", appViewUtils))
 	}
-
-	// Generate type definition for views
-	wax.GenerateDefinitionFile("./views/model.generated.d.ts", "", internal.PageModel{}, appViewUtils)
 
 	serverStartedOn := time.Now().UTC().Format(time.RFC3339Nano)
 	e.GET("/", func(c echo.Context) error {
