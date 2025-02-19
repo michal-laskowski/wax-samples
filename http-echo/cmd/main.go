@@ -53,7 +53,7 @@ func main() {
 		// Use livereload
 		go livereload.StartLiveReload(livereload.LiveReloadConfig{})
 	} else {
-		fmt.Printf("WAX will use embedded views")
+		fmt.Printf("WAX will use embedded views. If you want load them from FS use -isDev flag")
 		e.Renderer = wax_echo.NewWaxEchoRenderer(wax.NewFsViewResolver(views.EmbeddedViews), wax.WithGlobalObject("viewUtils", appViewUtils))
 	}
 
@@ -70,7 +70,7 @@ func main() {
 		})
 	})
 
-	e.Logger.Fatal(e.Start(":5000"))
+	e.Logger.Fatal(e.Start(":3000"))
 }
 
 type AppViewUtils struct {
